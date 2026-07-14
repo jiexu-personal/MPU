@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Stress Band</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <section id="splash" class="page active splash-screen">
+            <div class="splash-content pulse-animation">
+                <div class="logo-wrapper">
+                    <i class="fa-solid fa-wave-square"></i>
+                </div>
+                <h1 class="gradient-text">SMART STRESS BAND</h1>
+                <p>Monitor.<br>Manage.<br>Feel Better.</p>
+            </div>
+        </section>
+
+        <section id="dashboard" class="page">
+            <header class="glass-header">
+                <div class="user-info">
+                    <h2>Hi, Student <span class="wave">👋</span></h2>
+                    <p class="subtitle">Your daily insights</p>
+                </div>
+                <div class="header-icon">
+                    <i class="fa-regular fa-bell"></i>
+                </div>
+            </header>
+
+            <div class="content-scroll">
+                <div class="glass-card gauge-card">
+                    <h3>Current Stress</h3>
+                    <div class="gauge-container">
+                        <svg viewBox="0 0 100 50" class="gauge-svg">
+                            <path class="gauge-bg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" />
+                            <path class="gauge-progress" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke-dasharray="125.6" stroke-dashoffset="35.16" />
+                        </svg>
+                        <div class="gauge-data">
+                            <span class="gauge-value" id="dash-stress-val">72<small>%</small></span>
+                            <span class="gauge-label" id="dash-stress-label">Moderate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="glass-card metric">
+                        <div class="metric-icon hr-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="metric-info">
+                            <h4>Heart Rate</h4>
+                            <p>84 <span>BPM</span></p>
+                        </div>
+                    </div>
+                    <div class="glass-card metric">
+                        <div class="metric-icon band-icon"><i class="fa-brands fa-bluetooth-b"></i></div>
+                        <div class="metric-info">
+                            <h4>Band Status</h4>
+                            <p>Connected <span>89%</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card summary-card">
+                    <h3>Today's Summary</h3>
+                    <p>Your stress levels peaked around 2:00 PM during your lecture. Consider a short break.</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="stress-alert" class="overlay hidden">
+            <div class="glass-popup slide-up">
+                <div class="popup-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h3>High Stress Detected</h3>
+                <p>We've noticed your stress level is increasing.</p>
+                <button class="btn-primary" onclick="navigateTo('ai-coach'); hideAlert();">Open AI Coach</button>
+                <button class="btn-secondary" onclick="hideAlert()">Dismiss</button>
+            </div>
+        </div>
+
+        <section id="ai-coach" class="page">
+            <header class="glass-header">
+                <h2>AI Coach</h2>
+                <button class="icon-btn" onclick="navigateTo('dashboard')"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            
+            <div class="chat-container content-scroll">
+                <div class="chat-message ai slide-in-left">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="bubble">Hi! Your stress level has increased to 72%.</div>
+                </div>
+                <div class="chat-message ai slide-in-left delay-1">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="bubble">Let's reduce it together. Here is my recommendation:</div>
+                </div>
+                <div class="chat-message ai slide-in-left delay-2">
+                    <div class="bubble recommendations">
+                        <ul>
+                            <li><i class="fa-solid fa-check text-accent"></i> 60-second breathing</li>
+                            <li><i class="fa-solid fa-check text-accent"></i> Drink water</li>
+                            <li><i class="fa-solid fa-check text-accent"></i> Take a short walk</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-footer slide-up delay-3">
+                <button class="btn-primary btn-large pulse-btn" onclick="startBreathing()">Start Exercise</button>
+            </div>
+        </section>
+
+        <section id="breathing" class="page">
+            <button class="icon-btn close-floating" onclick="navigateTo('dashboard')"><i class="fa-solid fa-xmark"></i></button>
+            <div class="breathing-wrapper">
+                <div class="breathing-circle">
+                    <div class="circle-inner"></div>
+                    <div class="circle-glow"></div>
+                </div>
+                <h2 id="breathe-instruction">Breathe In</h2>
+            </div>
+        </section>
+
+        <section id="success" class="page">
+            <div class="confetti-container" id="confetti"></div>
+            <div class="success-content slide-up">
+                <div class="success-icon"><i class="fa-solid fa-check-circle"></i></div>
+                <h2 class="gradient-text">Congratulations!</h2>
+                <p>Stress reduced.</p>
+                
+                <div class="stat-change">
+                    <div class="old-stat">72%</div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <div class="new-stat text-success">55%</div>
+                </div>
+                
+                <button class="btn-primary" onclick="finishExercise()">Return to Dashboard</button>
+            </div>
+        </section>
+
+        <section id="history" class="page">
+            <header class="glass-header">
+                <h2>Insights</h2>
+            </header>
+            <div class="content-scroll">
+                <div class="glass-card chart-card">
+                    <h3>Weekly Average</h3>
+                    <div class="chart-container">
+                        <svg viewBox="0 0 300 150" class="line-chart">
+                            <defs>
+                                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#00d2ff"/>
+                                    <stop offset="100%" stop-color="#3a7bd5"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="chart-path" d="M 10 120 C 50 120, 40 40, 90 60 C 140 80, 150 100, 200 70 C 250 40, 270 90, 290 80" fill="none" stroke="url(#lineGrad)" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="10" cy="120" r="4" fill="#00d2ff" />
+                            <circle cx="90" cy="60" r="4" fill="#00d2ff" />
+                            <circle cx="200" cy="70" r="4" fill="#00d2ff" />
+                            <circle cx="290" cy="80" r="4" fill="#3a7bd5" />
+                        </svg>
+                        <div class="x-axis">
+                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <h3>Weekly Improvement</h3>
+                    <div class="improvement-stat">
+                        <i class="fa-solid fa-arrow-trend-down text-success"></i>
+                        <span>12% lower than last week</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sleep" class="page">
+            <header class="glass-header">
+                <h2>Sleep & Recovery</h2>
+            </header>
+            <div class="content-scroll">
+                <div class="sleep-rings-container">
+                    <div class="circular-progress">
+                        <div class="inner-circle">
+                            <h2>89<small>%</small></h2>
+                            <span>Score</span>
+                        </div>
+                        <svg>
+                            <circle cx="75" cy="75" r="65"></circle>
+                            <circle cx="75" cy="75" r="65" class="progress-ring" style="--percent: 89;"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="glass-card metric">
+                        <div class="metric-info text-center">
+                            <p class="subtitle">Duration</p>
+                            <h4>7h 48m</h4>
+                        </div>
+                    </div>
+                    <div class="glass-card metric">
+                        <div class="metric-info text-center">
+                            <p class="subtitle">Recovery</p>
+                            <h4 class="text-accent">Excellent</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card alert-card">
+                    <div class="alert-icon"><i class="fa-solid fa-bed"></i></div>
+                    <div class="alert-text">
+                        <h4>AI Recommendation</h4>
+                        <p>Sleep before 11PM tonight for optimal recovery.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="profile" class="page">
+            <header class="glass-header">
+                <h2>Profile</h2>
+            </header>
+            <div class="content-scroll">
+                <div class="profile-header text-center">
+                    <div class="profile-img">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h3>Student User</h3>
+                    <p class="subtitle">Premium Member</p>
+                </div>
+                
+                <div class="settings-group">
+                    <div class="glass-card setting-item">
+                        <div class="setting-left">
+                            <i class="fa-brands fa-bluetooth-b text-accent"></i>
+                            <span>Band Connected</span>
+                        </div>
+                        <div class="setting-right">89% <i class="fa-solid fa-battery-three-quarters text-success"></i></div>
+                    </div>
+                    <div class="glass-card setting-item">
+                        <div class="setting-left">
+                            <i class="fa-solid fa-microchip"></i>
+                            <span>Firmware</span>
+                        </div>
+                        <div class="setting-right">v2.1.4</div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="glass-card setting-item">
+                        <div class="setting-left">
+                            <i class="fa-solid fa-truck-medical text-error"></i>
+                            <span>Emergency Contact</span>
+                        </div>
+                        <div class="setting-right"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                    <div class="glass-card setting-item">
+                        <div class="setting-left">
+                            <i class="fa-solid fa-bell"></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="setting-right"><div class="toggle active"></div></div>
+                    </div>
+                    <div class="glass-card setting-item">
+                        <div class="setting-left">
+                            <i class="fa-solid fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </div>
+                        <div class="setting-right"><div class="toggle active"></div></div>
+                    </div>
+                    <div class="glass-card setting-item">
+                        <div class="setting-left">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </div>
+                        <div class="setting-right"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="bottom-nav hidden" id="bottom-nav">
+            <a href="#" class="nav-item active" data-target="dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-target="history">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>History</span>
+            </a>
+            <a href="#" class="nav-item ai-nav" data-target="ai-coach">
+                <div class="ai-orb"></div>
+                <span>Coach</span>
+            </a>
+            <a href="#" class="nav-item" data-target="sleep">
+                <i class="fa-solid fa-moon"></i>
+                <span>Sleep</span>
+            </a>
+            <a href="#" class="nav-item" data-target="profile">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
